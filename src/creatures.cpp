@@ -1,4 +1,5 @@
 #include "./headers/creatures.h"
+#include "./headers/movement.h"
 #include <string>
 #include <utility>
 
@@ -31,11 +32,15 @@ int creatures::getY(){
 }
 
 void creatures::setX(int x){
-  this->x = x;
+  if(x < 128){
+      this->x = x;
+  }
 }
 
 void creatures::setY(int y){
-  this->y = y;
+  if(y < 128){
+    this->y = y;
+  }
 }
 
 void creatures::setLocation(int x, int y){
@@ -45,4 +50,41 @@ void creatures::setLocation(int x, int y){
 
 void creatures::setGene(std::string gene){
   this->gene = gene;
+}
+
+void creatures::move(grid universe){
+  double moveDecision = ((double) rand() / (RAND_MAX));
+  if(moveDecision > 0.5){
+    direction directionDecision = (direction)(((double) rand() / RAND_MAX)*4);
+    switch(directionDecision){
+      case LEFT:
+        if(universe.checkEmpty(this->x - 1, this-> y)){
+          universe.setFree(this->x, this-> y);
+          this->setX(this->x - 1);
+          universe.setOccupied(this->x , this-> y);
+        }
+        break;
+      case RIGHT:
+        if(universe.checkEmpty(this->x + 1, this-> y)){
+          universe.setFree(this->x, this-> y);
+          this->setX(this->x + 1);
+          universe.setOccupied(this->x , this-> y);
+        }
+        break;
+      case UP: 
+        if(universe.checkEmpty(this->x, this-> y - 1)){
+          universe.setFree(this->x, this-> y);
+          this->setY(this->y - 1);
+          universe.setOccupied(this->x , this-> y);
+        }
+        break;
+      case DOWN: 
+        if(universe.checkEmpty(this->x, this-> y + 1)){
+          universe.setFree(this->x, this-> y);
+          this->setY(this->y + 1);
+          universe.setOccupied(this->x , this-> y);
+        }
+        break;
+    }
+  }
 }
