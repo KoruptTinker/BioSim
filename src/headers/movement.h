@@ -1,3 +1,5 @@
+#ifndef MOVEMENT_H
+#define MOVEMENT_H
 #include <utility>
 #include <map>
 #include <string>
@@ -8,3 +10,4 @@ enum direction{
   UP,
   DOWN
 };
+#endif

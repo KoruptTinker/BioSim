@@ -31,4 +31,12 @@
 *.exe
 *.out
 *.app
+
+
+#Output Media
+*.mp4
+*.jpg
+
+#Misc Files
 .vscode
+src/libraries

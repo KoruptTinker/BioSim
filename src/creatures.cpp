@@ -2,6 +2,7 @@
 #include "./headers/movement.h"
 #include <string>
 #include <utility>
+#include <iostream>
 
 creatures::creatures(){
   this->x = 0;
@@ -9,10 +10,16 @@ creatures::creatures(){
   this->gene = "";
 }
 
-creatures::creatures(int x, int y, std::string gene){
-  this->x = x;
-  this->y = y;
+creatures::creatures(std::string gene, grid universe){
   this->gene = gene;
+  int generatedX = 0, generatedY = 0;
+  while(!universe.checkEmpty(generatedX, generatedY)){
+    generatedX = (int)(((double) rand() / RAND_MAX)*127);
+    generatedY = (int)(((double) rand() / RAND_MAX)*127);
+  }
+  this->x = generatedX;
+  this->y = generatedY;
+  universe.setOccupied(generatedX, generatedY);
 }
 
 std::pair<int, int> creatures::getLocation(){
@@ -32,13 +39,13 @@ int creatures::getY(){
 }
 
 void creatures::setX(int x){
-  if(x < 128){
+  if(x < 128 && x >= 0){
       this->x = x;
   }
 }
 
 void creatures::setY(int y){
-  if(y < 128){
+  if(y < 128 && y >= 0){
     this->y = y;
   }
 }
@@ -54,7 +61,7 @@ void creatures::setGene(std::string gene){
 
 void creatures::move(grid universe){
   double moveDecision = ((double) rand() / (RAND_MAX));
-  if(moveDecision > 0.5){
+  if(moveDecision >= 0.5){
     direction directionDecision = (direction)(((double) rand() / RAND_MAX)*4);
     switch(directionDecision){
       case LEFT:
@@ -87,4 +94,12 @@ void creatures::move(grid universe){
         break;
     }
   }
+}
+
+int creatures::getRenderX(int w){
+  return (int)(((double) this->x / 127)*w); 
+}
+
+int creatures::getRenderY(int h){
+  return (int)(((double) this->y / 127)*h);
 }

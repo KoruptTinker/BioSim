@@ -22,20 +22,20 @@ void grid::setWorld(int** world){
 }
 
 bool grid::checkEmpty(int x, int y){
-  if(x < 128 && y < 128){
+  if(x < 128 && x >= 0 && y < 128 && y >= 0){
     return this->world[x][y] == 0;
   }
   return false;
 }
 
 void grid::setOccupied(int x, int y){
-  if(x < 128 && y < 128){
+  if(x < 128 && x >= 0 && y < 128 && y >= 0){
     this->world[x][y] = 1;
   }
 }
 
 void grid::setFree(int x, int y){
-  if(x < 128 && y < 128){
+  if(x < 128 && x >= 0 && y < 128 && y >= 0){
     this->world[x][y] = 0;
   }
 }
